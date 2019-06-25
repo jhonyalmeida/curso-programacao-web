@@ -36,3 +36,6 @@ release.properties
 
 # Node
 backend-node/node_modules
+
+#Vue
+frontend-vue/node_modules
