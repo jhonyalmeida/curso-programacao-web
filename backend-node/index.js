@@ -1,10 +1,28 @@
 const express = require('express')
-const app = express();
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const Chamados = require('./Chamados')
 
-app.get('/', (req, res, next) => {
-    res.json({ name: "Jhony" })
-});
+const app = express()
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.get('/chamados', (request, response) => {
+    return response.json(Chamados.findAll())
+})
+
+app.get('/chamados/:id', (request, response) => {
+    const chamado = Chamados.find(parseInt(request.params.id))
+    return response.json(chamado)
+})
+
+app.post('/chamados', (request, response) => {
+    const chamado = request.body
+    Chamados.create(chamado)
+    return response.json(chamado)
+})
 
 app.listen(8000, () => {
-    console.log('Example app listening on port 8000!')
-});
+    console.log('App is running!')
+})
